@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Image to ASCII Art Converter</title>
+    <!-- Add Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            padding: 40px;
+        }
+        .ascii-container {
+            max-width: 70%;
+            border: 1px solid #ccc;
+            padding: 10px;
+            overflow: auto;
+        }
+        pre {
+            font-family: 'Courier New', Courier, monospace;
+            white-space: pre-wrap;
+            font-size: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="text-center mt-3">Image to ASCII Art Converter</h1>
+        <div class="row justify-content-center mt-3">
+            <form method="post" enctype="multipart/form-data" class="col-sm-6 col-md-4">
+                <div class="form-group">
+                    <input type="file" name="image" class="form-control-file">
+                </div>
+                <button type="submit" class="btn btn-primary btn-block">Convert</button>
+            </form>
+        </div>
+        {% if ascii_img_rows %}
+        <div class="row justify-content-center mt-4">
+            <div class="ascii-container col-md-8">
+                <pre>{{ '\n'.join(ascii_img_rows) }}</pre>
+            </div>
+        </div>
+        <div class="row justify-content-center mt-3">
+            <a href="{{ url_for('download_ascii', ascii_img_rows=ascii_img_rows|join('|')) }}" class="btn btn-success" download="ascii_art.txt">Download ASCII Art</a>
+        </div>
+        {% endif %}
+        {% if error_message %}
+        <div class="row justify-content-center mt-4">
+            <p class="alert alert-danger">{{ error_message }}</p>
+        </div>
+        {% endif %}
+    </div>
+    <!-- Add Bootstrap JS -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
